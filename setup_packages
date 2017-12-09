@@ -1,0 +1,29 @@
+#!/bin/sh
+
+#mkdir bin
+#
+#wget https://raw.githubusercontent.com/coreos/scripts/master/contrib/create-coreos-vdi -O bin/create-coreos-vdi
+#chmod +x bin/create-coreos-vdi
+#
+#bin/create-coreos-vdi -d images -V stable
+
+find_virtualenv() {
+    which virtualenv 2> /dev/null || which virtualenv
+}
+
+create_env () {
+    local cmd=$(find_virtualenv)
+    [ -z "$cmd" ] && sudo pip install virtualenv && cmd=$(find_virtualenv)
+    [ -z "$cmd" ] && echo "virtualenv is missing" && exit 1
+
+    ${cmd} -p $(which python) .env
+    . .env/bin/activate
+
+    pip install -U pip setuptools
+}
+
+[ -z "$(which python)" ] && echo 'python is missing' && exit 1
+
+[ -e .env/bin/activate ] && . .env/bin/activate || create_env
+
+pip install -U -r requirements.txt

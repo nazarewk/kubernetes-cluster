@@ -99,3 +99,10 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+*.retry
+/.idea
+!/.idea/runConfigurations
+!/.idea/kubernetes-cluster.iml
+!/.idea/modules.xml
+!/.idea/misc.xml
