@@ -1,6 +1,12 @@
 - hosts: localhost
   connection: local
   tasks:
+  - name: clean ssl directory
+    file:
+      path: ssl
+      state: absent
+    when: clean is defined
+
   - name: ensure ssl directory
     file:
       path: ssl

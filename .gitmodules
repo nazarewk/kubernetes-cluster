@@ -1,6 +1,6 @@
 [submodule "coreos-vagrant"]
 	path = coreos-vagrant
-	url = https://github.com/coreos/coreos-vagrant
+	url = git@github.com:coreos/coreos-vagrant.git
 [submodule "roles/ansible-coreos-bootstrap"]
 	path = roles/ansible-coreos-bootstrap
 	url = git@github.com:defunctzombie/ansible-coreos-bootstrap.git
