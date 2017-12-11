@@ -1,3 +1,0 @@
-#cloud-config
-ssh-authorized-keys:
-  - '{{ lookup("file", ansible_env.HOME + "/.ssh/id_rsa.pub") }}'

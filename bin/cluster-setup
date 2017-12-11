@@ -32,3 +32,12 @@ $vm_memory = 1024
 $vm_cpus = 2
 $vb_cpuexecutioncap = 50
 ' > config.rb
+
+cd ..
+
+mkdir -p dist/ssl
+cd dist/ssl
+openssl genrsa -out ca-key.pem 2048
+openssl req -x509 -new -nodes -key ca-key.pem -days 10000 -out ca.pem -subj "/CN=kube-ca"
+
+

@@ -1,0 +1,13 @@
+- copy:
+    content: |
+      [Service]
+      Environment=ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
+      Environment=ETCD_ADVERTISE_CLIENT_URLS={{ ETCD_ENDPOINTS }}
+    dest: /etc/systemd/system/etcd2.conf
+  register: etcd2_service
+
+- service:
+    name: etcd2
+    state: restarted
+    enabled: yes
+  when: etcd2_service.changed
