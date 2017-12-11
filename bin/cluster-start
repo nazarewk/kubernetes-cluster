@@ -2,7 +2,4 @@
 cd $(dirname "$(readlink -f "$0")")/..
 
 cd coreos-vagrant
-cp config.rb.sample config.rb
-
-sed -i 's/^$num_instances=[0-9]*/$num_instances=3/' config.rb
 vagrant up

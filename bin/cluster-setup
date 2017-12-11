@@ -1,0 +1,34 @@
+#!/bin/sh
+cd $(dirname "$(readlink -f "$0")")/..
+
+cd coreos-vagrant
+
+set -a
+SSH_KEY=$(cat ~/.ssh/id_rsa.pub)
+NUM_INSTANCES=3
+echo '{
+  "ignition": {
+    "version": "2.0.0",
+    "config": {}
+  },
+  "passwd": {
+    "users": [
+      {
+        "name": "core",
+        "sshAuthorizedKeys": [
+          "${SSH_KEY}"
+        ]
+      }
+    ]
+  }
+}' | envsubst > config.ign
+
+echo '# Size of the CoreOS cluster created by Vagrant
+$num_instances=3
+
+$instance_name_prefix="core"
+$vm_gui = false
+$vm_memory = 1024
+$vm_cpus = 2
+$vb_cpuexecutioncap = 50
+' > config.rb
