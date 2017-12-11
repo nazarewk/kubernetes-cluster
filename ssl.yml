@@ -94,8 +94,6 @@
     with_dict: "{{ hostvars }}"
 
 
-
-
   - name: ssl/admin-key.pem
     command: openssl genrsa -out ssl/admin-key.pem 2048
     args:
@@ -111,3 +109,9 @@
     args:
       creates: "ssl/admin.pem"
 
+  - name: set ssl permissions
+    file:
+      path: ssl
+      recurse: yes
+      # Because X (instead of x) only applies to directories or files with at least one x bit set.
+      mode: u=rwX,g=,o=
