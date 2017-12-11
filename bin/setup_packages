@@ -1,11 +1,5 @@
 #!/bin/sh
-
-#mkdir bin
-#
-#wget https://raw.githubusercontent.com/coreos/scripts/master/contrib/create-coreos-vdi -O bin/create-coreos-vdi
-#chmod +x bin/create-coreos-vdi
-#
-#bin/create-coreos-vdi -d images -V stable
+cd $(dirname "$(readlink -f "$0")")/..
 
 find_virtualenv() {
     which virtualenv 2> /dev/null || which virtualenv
