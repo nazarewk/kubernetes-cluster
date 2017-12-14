@@ -10,6 +10,10 @@ CoreOS cluster setup for development using [coreos-vagrant](https://github.com/c
     bin/cluster-setup
     bin/cluster-start
     bin/cluster-stop
+    
+    . bin/activate
+    ansible-playbook -K hosts-local.yml
+    ssh core@core-01
 
 # Kubernetes setup
 

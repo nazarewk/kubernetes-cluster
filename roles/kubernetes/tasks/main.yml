@@ -1,0 +1,12 @@
+- file:
+    path: /etc/kubernetes/ssl
+    state: directory
+    recurse: yes
+
+- copy:
+    src: "./ssl/{{ item }}"
+    dest: /etc/kubernetes/ssl
+  with_items:
+  - ca.pem
+  - apiserver.pem
+  - apiserver-key.pem

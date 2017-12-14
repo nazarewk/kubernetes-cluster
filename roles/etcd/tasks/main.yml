@@ -1,9 +1,14 @@
+- file:
+    path: /etc/systemd/system/etcd2.service.d
+    state: directory
+    recurse: yes
+
 - copy:
     content: |
       [Service]
       Environment=ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
       Environment=ETCD_ADVERTISE_CLIENT_URLS={{ ETCD_ENDPOINTS }}
-    dest: /etc/systemd/system/etcd2.conf
+    dest: /etc/systemd/system/etcd2.service.d/40-listen-address.conf
   register: etcd2_service
 
 - service:

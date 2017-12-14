@@ -1,4 +1,7 @@
+- import_playbook: ssl.yml
 - hosts: masters
   become: yes
   roles:
   - etcd
+  - kubernetes
+  - flannel
