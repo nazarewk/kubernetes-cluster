@@ -6,8 +6,10 @@ K8S_SERVICE_IP: 10.4.0.1
 DNS_SERVICE_IP: 10.3.0.10
 
 ETCD_SERVER: "{{ ETCD_ENDPOINTS.split(',')[0] }}"
-ADVERTISE_IP: "{{ ansible_default_ipv4.address }}"
+#ADVERTISE_IP: "{{ ansible_default_ipv4.address }}"
+ADVERTISE_IP: "{{ hostvars[groups.masters[0]].ansible_host }}"
 K8S_VER: v1.6.1_coreos.0
+NETWORK_PLUGIN: cni
 
 is_master: "{{ 'masters' in group_names }}"
 

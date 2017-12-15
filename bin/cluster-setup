@@ -28,7 +28,7 @@ $num_instances=3
 
 $instance_name_prefix="core"
 $vm_gui = false
-$vm_memory = 1024
+$vm_memory = 2048
 $vm_cpus = 2
 $vb_cpuexecutioncap = 50
 ' > config.rb

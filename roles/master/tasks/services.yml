@@ -11,7 +11,7 @@
 
 - systemd:
     name: "{{ item }}"
-    state: "{{ 'restarted' if configure.changed else 'started' }}"
+    state: started
     enabled: yes
   with_items:
   - docker

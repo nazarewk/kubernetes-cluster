@@ -1,4 +1,3 @@
-- import_playbook: bootstrap.yml
 - import_playbook: ssl.yml
 - import_playbook: etc-hosts.yml
 - import_playbook: master.yml
