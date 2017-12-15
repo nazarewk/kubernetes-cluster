@@ -4,14 +4,15 @@
     recurse: yes
 
 - copy:
+    dest: /etc/systemd/system/etcd2.service.d/40-listen-address.conf
     content: |
       [Service]
       Environment=ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
       Environment=ETCD_ADVERTISE_CLIENT_URLS={{ ETCD_ENDPOINTS }}
-    dest: /etc/systemd/system/etcd2.service.d/40-listen-address.conf
   register: etcd2_service
 
-- service:
+- systemd:
+    daemon_reload: yes
     name: etcd2
     state: restarted
     enabled: yes

@@ -1,7 +1,5 @@
-
 - lineinfile:
     path: /etc/hosts
-    line: "{{ item.value.ansible_host }} {{ item.value.inventory_hostname }}"
-    regexp: "^{{ item.value.ansible_host }} *"
-  with_dict: "{{ hostvars }}"
-
+    line: "{{ item.ip }} {{ item.name}}"
+    regexp: "^{{ item.ip }} *"
+  with_items: "{{ coreos_nodes }}"

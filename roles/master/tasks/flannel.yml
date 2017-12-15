@@ -12,7 +12,7 @@
 - copy:
     dest: /etc/flannel/options.env
     content: |
-      FLANNELD_IFACE={{ ansible_default_ipv4.address }}
+      FLANNELD_IFACE={{ ADVERTISE_IP }}
       FLANNELD_ETCD_ENDPOINTS={{ ETCD_ENDPOINTS }}
 
 - copy:

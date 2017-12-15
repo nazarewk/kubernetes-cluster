@@ -3,6 +3,14 @@ ETCD_ENDPOINTS: "{{ groups.masters|map('regex_replace', '(.*)', 'http://\\1:2379
 POD_NETWORK: 10.3.0.0/24
 SERVICE_IP_RANGE: 10.4.0.0/24
 K8S_SERVICE_IP: 10.4.0.1
-DNS_SERVICE: 10.3.0.10
+DNS_SERVICE_IP: 10.3.0.10
 
+ETCD_SERVER: "{{ ETCD_ENDPOINTS.split(',')[0] }}"
 ADVERTISE_IP: "{{ ansible_default_ipv4.address }}"
+K8S_VER: v1.6.1_coreos.0
+
+is_master: "{{ 'masters' in group_names }}"
+
+hostvars2: "{{ hostvars }}" # Some weird bug where hostvars is not available for json_query
+
+coreos_nodes: "{{ hostvars2 | json_query('*.{ip: ansible_host, name: inventory_hostname}') }}"

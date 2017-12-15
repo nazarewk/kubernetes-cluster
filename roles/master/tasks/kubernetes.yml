@@ -4,8 +4,8 @@
     recurse: yes
 
 - copy:
-    src: "./ssl/{{ item }}"
     dest: /etc/kubernetes/ssl
+    src: "./ssl/{{ item }}"
   with_items:
   - ca.pem
   - apiserver.pem

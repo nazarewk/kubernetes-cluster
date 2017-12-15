@@ -2,6 +2,4 @@
 - hosts: masters
   become: yes
   roles:
-  - etcd
-  - kubernetes
-  - flannel
+  - master

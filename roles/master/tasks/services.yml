@@ -1,0 +1,18 @@
+- uri:
+    method: PUT
+    url: "{{ ETCD_SERVER }}/v2/keys/coreos.com/network/config"
+    status_code: 200,201
+    body: 'value={"Network":"{{ POD_NETWORK }}","Backend":{"Type":"vxlan"} }'
+  register: configure
+  changed_when: configure.status == 201
+
+- systemd:
+    daemon_reload: yes
+
+- systemd:
+    name: "{{ item }}"
+    state: "{{ 'restarted' if configure.changed else 'started' }}"
+    enabled: yes
+  with_items:
+  - flanneld
+  - kubelet

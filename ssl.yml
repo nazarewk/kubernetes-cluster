@@ -70,28 +70,28 @@
         subjectAltName = @alt_names
         [alt_names]
         IP.1 = $ENV::WORKER_IP
-
+        
   - name: ssl/WORKER-worker-key.pem
-    command: openssl genrsa -out ssl/{{ item.value.inventory_hostname }}-worker-key.pem 2048
+    command: openssl genrsa -out ssl/{{ item.name }}-worker-key.pem 2048
     args:
-      creates: "ssl/{{ item.value.inventory_hostname }}-worker-key.pem"
-    with_dict: "{{ hostvars }}"
+      creates: "ssl/{{ item.name }}-worker-key.pem"
+    with_items: "{{ coreos_nodes }}"
 
   - name: ssl/WORKER-worker.csr
-    command: openssl req -new -key ssl/{{ item.value.inventory_hostname }}-worker-key.pem -out ssl/{{ item.value.inventory_hostname }}-worker.csr -subj "/CN={{ item.value.inventory_hostname }}" -config ssl/worker.cnf
+    command: openssl req -new -key ssl/{{ item.name }}-worker-key.pem -out ssl/{{ item.name }}-worker.csr -subj "/CN={{ item.name }}" -config ssl/worker.cnf
     args:
-      creates: "ssl/{{ item.value.inventory_hostname }}-worker.csr"
+      creates: "ssl/{{ item.name }}-worker.csr"
     environment:
-      WORKER_IP: "{{ item.value.ansible_host }}"
-    with_dict: "{{ hostvars }}"
+      WORKER_IP: "{{ item.ip }}"
+    with_items: "{{ coreos_nodes }}"
     
   - name: ssl/WORKER-worker.pem
-    command: openssl x509 -req -in ssl/{{ item.value.inventory_hostname }}-worker.csr -CA ssl/ca.pem -CAkey ssl/ca-key.pem -CAcreateserial -out ssl/{{ item.value.inventory_hostname }}-worker.pem -days 365 -extensions v3_req -extfile ssl/worker.cnf
+    command: openssl x509 -req -in ssl/{{ item.name }}-worker.csr -CA ssl/ca.pem -CAkey ssl/ca-key.pem -CAcreateserial -out ssl/{{ item.name }}-worker.pem -days 365 -extensions v3_req -extfile ssl/worker.cnf
     args:
-      creates: "ssl/{{ item.value.inventory_hostname }}-worker.pem"
+      creates: "ssl/{{ item.name }}-worker.pem"
     environment:
-      WORKER_IP: "{{ item.value.ansible_host }}"
-    with_dict: "{{ hostvars }}"
+      WORKER_IP: "{{ item.ip }}"
+    with_items: "{{ coreos_nodes }}"
 
 
   - name: ssl/admin-key.pem
