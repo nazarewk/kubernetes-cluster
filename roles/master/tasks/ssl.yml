@@ -4,8 +4,11 @@
     recurse: yes
 
 - copy:
-    dest: /etc/kubernetes/ssl
+    dest: /etc/kubernetes/ssl/
     src: "./ssl/{{ item }}"
+    owner: root
+    group: root
+    mode: 0600
   with_items:
   - ca.pem
   - apiserver.pem

@@ -1,0 +1,5 @@
+- import_playbook: ssl.yml
+- hosts: nodes
+  become: yes
+  roles:
+  - node

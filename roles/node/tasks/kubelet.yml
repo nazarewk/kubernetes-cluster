@@ -6,11 +6,15 @@
   notify:
   - restart kubelet
   with_items:
-  - kube-apiserver
   - kube-proxy
-  - kube-scheduler
-  - kube-controller-manager
-  - calico
+
+- template:
+    src: "kubelet/{{ item }}.yaml"
+    dest: "/etc/kubernetes/{{ item }}.yaml"
+  notify:
+  - restart kubelet
+  with_items:
+  - worker-kubeconfig
 
 - template:
     src: "{{ item.src }}"

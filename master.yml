@@ -3,3 +3,9 @@
   become: yes
   roles:
   - master
+  post_tasks:
+  - name: Waiting for kube-apiserver (127.0.0.1:8080)
+    wait_for:
+      port: 8080
+      sleep: 5
+      timeout: 300

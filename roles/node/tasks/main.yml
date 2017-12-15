@@ -1,4 +1,3 @@
-- import_tasks: etcd.yml
 - import_tasks: ssl.yml
 - import_tasks: kubelet.yml
 - import_tasks: services.yml

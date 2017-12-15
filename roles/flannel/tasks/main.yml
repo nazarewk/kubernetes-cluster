@@ -13,19 +13,19 @@
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
   notify:
-  - restart flannel
+  - restart flanneld
   with_items:
-  - src: flannel/options.env.j2
+  - src: options.env.j2
     dest: /etc/flannel/options.env
 
-  - src: flannel/40-ExecStartPre-symlink.conf.j2
+  - src: 40-ExecStartPre-symlink.conf.j2
     dest: /etc/systemd/system/flanneld.service.d/40-ExecStartPre-symlink.conf
 
-  - src: flannel/40-flannel.conf.j2
+  - src: 40-flannel.conf.j2
     dest: /etc/systemd/system/docker.service.d/40-flannel.conf
 
-  - src: flannel/docker_opts_cni.env.j2
+  - src: docker_opts_cni.env.j2
     dest: /etc/kubernetes/cni/docker_opts_cni.env
 
-  - src: flannel/10-flannel.conf.j2
+  - src: 10-flannel.conf.j2
     dest: /etc/kubernetes/cni/net.d/10-flannel.conf
