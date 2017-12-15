@@ -99,7 +99,7 @@ ENV/
 
 # mypy
 .mypy_cache/
-
+/hosts.ini
 *.retry
 /.idea
 !/.idea/runConfigurations
@@ -107,3 +107,4 @@ ENV/
 !/.idea/modules.xml
 !/.idea/misc.xml
 /ssl/
+/debug.yml
