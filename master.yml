@@ -8,4 +8,4 @@
     wait_for:
       port: 8080
       sleep: 5
-      timeout: 300
+      timeout: 900

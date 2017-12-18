@@ -5,7 +5,6 @@ cd coreos-vagrant
 
 set -a
 SSH_KEY=$(cat ~/.ssh/id_rsa.pub)
-NUM_INSTANCES=3
 echo '{
   "ignition": {
     "version": "2.0.0",
@@ -28,7 +27,7 @@ $num_instances=3
 
 $instance_name_prefix="core"
 $vm_gui = false
-$vm_memory = 2048
+$vm_memory = 3072
 $vm_cpus = 2
 $vb_cpuexecutioncap = 50
 ' > config.rb
