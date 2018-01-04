@@ -6,7 +6,7 @@ K8S_SERVICE_IP: 10.4.0.1
 DNS_SERVICE_IP: 10.3.0.10
 
 ETCD_SERVER: "{{ ETCD_ENDPOINTS.split(',')[0] }}"
-K8S_VER: v1.6.1_coreos.0
+K8S_VER: v1.9.0_coreos.0
 NETWORK_PLUGIN: cni
 
 is_master: "{{ 'masters' in group_names }}"
@@ -15,5 +15,6 @@ hostvars2: "{{ hostvars }}" # Some weird bug where hostvars is not available for
 
 coreos_nodes: "{{ hostvars2 | json_query('*.{ip: ansible_host, name: inventory_hostname}') }}"
 node: {ip: "{{ ansible_host }}", "name": "{{ inventory_hostname }}"}
+use_calico: no
 
 ADVERTISE_IP: "{{ node.ip }}"

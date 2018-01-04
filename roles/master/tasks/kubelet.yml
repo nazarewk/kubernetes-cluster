@@ -10,6 +10,23 @@
   - kube-proxy
   - kube-scheduler
   - kube-controller-manager
+
+- template:
+    src: "kubelet/{{ item }}.yaml"
+    dest: "/etc/kubernetes/manifests/{{ item }}.yaml"
+  notify:
+  - restart kubelet
+  when: use_calico
+  with_items:
+  - calico
+
+- file:
+    path: "{{ item }}"
+    state: "absent"
+  notify:
+  - restart kubelet
+  when: not use_calico
+  with_items:
   - calico
 
 - template:

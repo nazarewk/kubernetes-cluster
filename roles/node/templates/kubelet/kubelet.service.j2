@@ -4,17 +4,17 @@ Environment="RKT_RUN_ARGS=--uuid-file-save=/var/run/kubelet-pod.uuid \
 --volume dns,kind=host,source=/etc/resolv.conf \
 --mount volume=dns,target=/etc/resolv.conf \
 --volume var-log,kind=host,source=/var/log \
---mount volume=var-log,target=/var/log \
---volume cni-bin,kind=host,source=/opt/cni/bin \
---mount volume=cni-bin,target=/opt/cni/bin"
+{% if use_calico %}--volume cni-bin,kind=host,source=/opt/cni/bin \{% endif %}
+{% if use_calico %}--mount volume=cni-bin,target=/opt/cni/bin" \{% endif %}
+--mount volume=var-log,target=/var/log
 ExecStartPre=/usr/bin/mkdir -p /etc/kubernetes/manifests
 ExecStartPre=/usr/bin/mkdir -p /var/log/containers
 ExecStartPre=-/usr/bin/rkt rm --uuid-file=/var/run/kubelet-pod.uuid
-ExecStartPre=/usr/bin/mkdir -p /opt/cni/bin
+{% if use_calico %}ExecStartPre=/usr/bin/mkdir -p /opt/cni/bin{% endif %}
 ExecStart=/usr/lib/coreos/kubelet-wrapper \
 --api-servers=https://{{ MASTER_HOST }} \
 --cni-conf-dir=/etc/kubernetes/cni/net.d \
---network-plugin={{ NETWORK_PLUGIN }} \
+{% if use_calico %}--network-plugin={{ NETWORK_PLUGIN }} \{% endif %}
 --container-runtime=docker \
 --register-node=true \
 --allow-privileged=true \

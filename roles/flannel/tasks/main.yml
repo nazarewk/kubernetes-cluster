@@ -9,9 +9,21 @@
   - /etc/kubernetes/cni
   - /etc/kubernetes/cni/net.d
 
+- file:
+    path: "{{ item.dest }}"
+    state: "{{ item.state }}"
+  notify:
+  - restart flanneld
+  - restart docker
+  when: use_calico
+  with_items:
+  - dest: /etc/kubernetes/cni/net.d/10-flannel.conf
+    state: absent
+
 - template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
+  when: "{{ item.get('enabled', True) }}"
   notify:
   - restart flanneld
   with_items:
@@ -29,3 +41,4 @@
 
   - src: 10-flannel.conf.j2
     dest: /etc/kubernetes/cni/net.d/10-flannel.conf
+    enabled: "{{ not use_calico }}"
