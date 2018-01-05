@@ -3,12 +3,9 @@
     state: directory
     recurse: yes
 
-- copy:
-    dest: /etc/systemd/system/etcd2.service.d/40-listen-address.conf
-    content: |
-      [Service]
-      Environment=ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
-      Environment=ETCD_ADVERTISE_CLIENT_URLS={{ ETCD_ENDPOINTS }}
+- template:
+    src: "01-cluster-config.conf.j2"
+    dest: "/etc/systemd/system/etcd2.service.d/01-cluster-config.conf"
   register: etcd2_service
 
 - systemd:

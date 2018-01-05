@@ -1,5 +1,8 @@
-MASTER_HOST: "{{ groups.masters[0] }}"
-ETCD_ENDPOINTS: "{{ groups.masters|map('regex_replace', '(.*)', 'http://\\1:2379')|join(',') }}"
+hostvars2: "{{ hostvars }}" # Some weird bug where hostvars is not available for json_query
+
+etcd_nodes: "{{ hostvars2 | json_query('* | [?contains(group_names, `etcd`)].{ip: ansible_host, name: inventory_hostname}') }}"
+MASTER_HOST: "{{ groups.masters | default([None]) | first }}"
+ETCD_ENDPOINTS: "{{ etcd_nodes | json_query('[].join(``, [`http://`, ip, `:2379`]) | join(`,`, @)') }}"
 POD_NETWORK: 10.3.0.0/24
 SERVICE_IP_RANGE: 10.4.0.0/24
 K8S_SERVICE_IP: 10.4.0.1
@@ -11,7 +14,6 @@ NETWORK_PLUGIN: cni
 
 is_master: "{{ 'masters' in group_names }}"
 
-hostvars2: "{{ hostvars }}" # Some weird bug where hostvars is not available for json_query
 
 coreos_nodes: "{{ hostvars2 | json_query('*.{ip: ansible_host, name: inventory_hostname}') }}"
 node: {ip: "{{ ansible_host }}", "name": "{{ inventory_hostname }}"}
