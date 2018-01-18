@@ -1,4 +1,0 @@
-- hosts: coreos
-  gather_facts: False
-  roles:
-  - ansible-coreos-bootstrap

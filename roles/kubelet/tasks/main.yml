@@ -1,6 +1,0 @@
-- file:
-    path: "{{ item }}"
-    state: directory
-    recurse: yes
-  with_items:
-  - /etc/kubernetes/manifests

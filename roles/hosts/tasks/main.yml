@@ -1,5 +1,0 @@
-- lineinfile:
-    path: /etc/hosts
-    line: "{{ item.ip }} {{ item.name}}"
-    regexp: "^{{ item.ip }} *"
-  with_items: "{{ coreos_nodes }}"

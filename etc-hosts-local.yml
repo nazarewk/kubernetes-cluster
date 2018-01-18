@@ -1,6 +1,0 @@
-- hosts: localhost
-  connection: local
-  become: yes
-  tags: local
-  roles:
-  - hosts

@@ -1,2 +1,0 @@
-ETCD_INITIAL_CLUSTER_TOKEN: etcd-cluster-1
-ETCD_INITIAL_CLUSTER: "{{ etcd_nodes | json_query('[].join(`=`, [name, join(``, [`http://`, ip, `:2380`])]) | join(`,`, @)') }}"

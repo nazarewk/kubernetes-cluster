@@ -21,5 +21,3 @@ create_env () {
 [ -e .env/bin/activate ] && . .env/bin/activate || create_env
 
 pip install -U -r requirements.txt
-
-[ -e hosts.ini ] || ln -s hosts.example.ini hosts.ini

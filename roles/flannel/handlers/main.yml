@@ -1,9 +1,0 @@
-- name: restart flanneld
-  systemd:
-    name: flanneld
-    state: restarted
-
-- name: restart docker
-  systemd:
-    name: docker
-    state: restarted
