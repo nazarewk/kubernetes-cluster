@@ -6,4 +6,5 @@ Kubernetes on CoreOS cluster setup scripts
 ```bash
 bin/setup-cluster-full 192.168.56.{10,11,12}
 bin/kubectl get nodes
+bin/dashboard
 ```

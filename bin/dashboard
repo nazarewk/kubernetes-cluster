@@ -1,0 +1,5 @@
+#!/bin/sh
+cd $(dirname "$(readlink -f "$0")")/..
+
+bin/kubectl create -f dashboard-admin.yml
+xdg-open http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login
