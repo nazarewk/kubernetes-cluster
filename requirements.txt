@@ -1,2 +1,1 @@
-ansible
-jmespath
+-r kubespray/requirements.txt
