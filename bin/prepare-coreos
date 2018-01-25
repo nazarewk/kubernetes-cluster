@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+cd $(dirname "$(readlink -f "$0")")/..
+base_dir=${pwd}
+bin=${base_dir}/bin
+www="${base_dir}/zetis/WWW"
+
+wget -nc "https://github.com/coreos/container-linux-config-transpiler/releases/download/v${ct_version}/ct-v${ct_version}-x86_64-unknown-linux-gnu" -O ${bin}/ct
+${bin}/ct -pretty -in-file "${www}/coreos.yml" -out-file "${www}/coreos.ign"
