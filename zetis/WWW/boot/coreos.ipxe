@@ -3,7 +3,7 @@ set http http://vol
 set ftp http://ftp/pub/
 
 set base-url ${ftp}/Linux/CoreOS/alpha
-set ignition ${http}/~nazarewk/coreos.ign
+set ignition ${http}/~nazarewk/boot/coreos.ign
 
 set opts ${opts} coreos.autologin
 set opts ${opts} coreos.first_boot=1 coreos.config.url=${ignition}
