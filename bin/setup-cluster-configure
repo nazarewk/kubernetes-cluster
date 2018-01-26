@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 cd $(dirname "$(readlink -f "$0")")
 source cluster-vars
-cd ${dir}
+cd ${kubespray_dir}
 
 # based on https://github.com/kubernetes-incubator/kubespray/blob/master/docs/getting-started.md#building-your-own-inventory
 cp -r inventory -T ${inventory}

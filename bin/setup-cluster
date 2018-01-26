@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 cd $(dirname "$(readlink -f "$0")")
-[ -z "$@" ] && source activate $@ || source ./setup-cluster-configure $@
-cd ${dir}
+if [ -z "$@" ]; then
+  source activate $@
+else
+  source ./setup-cluster-configure $@
+fi
+cd ${kubespray_dir}
 ansible-playbook -i ${inventory}/inventory.cfg cluster.yml -b -v
 
 echo Staring kubectl proxy
