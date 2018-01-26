@@ -1,10 +1,10 @@
 #!/bin/sh
+set -a
 base_dir=$(readlink -f $(dirname "$(readlink -f "$0")")/..)
 bin=${base_dir}/bin
 kubespray_dir=${base_dir}/kubespray
 inventory=my_inventory
 DASHBOARD_URL=http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login
-set -a
 PATH="${base_dir}/bin:${PATH}"
 CONFIG_FILE=${inventory}/inventory.cfg
 KUBECONFIG=${kubespray_dir}/artifacts/admin.conf
