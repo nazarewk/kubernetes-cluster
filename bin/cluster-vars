@@ -3,7 +3,6 @@ base_dir=$(readlink -f $(dirname "$(readlink -f "$0")")/..)
 bin=${base_dir}/bin
 dir=${base_dir}/kubespray
 inventory=my_inventory
-declare -a IPS=(${@})
 DASHBOARD_URL=http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login
 set -a
 PATH="${base_dir}/bin:${PATH}"

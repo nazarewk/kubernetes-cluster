@@ -1,4 +1,4 @@
 #!/bin/sh
 cd $(dirname "$(readlink -f "$0")")
-source ./cluster-vars
+source ./cluster-vars $@
 source ../.env/bin/activate
