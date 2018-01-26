@@ -1,10 +1,11 @@
-#!/usr/bin/env bash
+#!/bin/sh
+set -e
 cd $(dirname "$(readlink -f "$0")")
-pwd
+bin=$(pwd)
 if [ -z "$@" ]; then
-  source ./activate $@
+  . ${bin}/activate $@
 else
-  source ./setup-cluster-configure $@
+  . ${bin}/setup-cluster-configure $@
 fi
 cd ${kubespray_dir}
 ansible-playbook -i ${inventory}/inventory.cfg cluster.yml -b -v

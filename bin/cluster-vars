@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 base_dir=$(readlink -f $(dirname "$(readlink -f "$0")")/..)
 bin=${base_dir}/bin
 kubespray_dir=${base_dir}/kubespray
