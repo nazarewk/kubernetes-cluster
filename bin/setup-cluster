@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 cd $(dirname "$(readlink -f "$0")")
-[ -z "$@" ] && source activate || source ./setup-cluster-configure "$@"
+[ -z "$@" ] && source activate $@ || source ./setup-cluster-configure $@
+cd ${dir}
 ansible-playbook -i ${inventory}/inventory.cfg cluster.yml -b -v
 
 echo Staring kubectl proxy
