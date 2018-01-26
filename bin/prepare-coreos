@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 cd $(dirname "$(readlink -f "$0")")/..
 ct_version=${1:-0.6.1}
-base_dir=${pwd}
+base_dir=$(pwd)
 bin=${base_dir}/bin
 www="${base_dir}/zetis/WWW"
 
