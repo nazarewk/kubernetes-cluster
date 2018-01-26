@@ -1,4 +1,6 @@
 #!/bin/sh
+_pwd=$(pwd)
 cd $(dirname "$(readlink -f "$0")")
 . ./cluster-vars $@
 . ../.env/bin/activate
+cd ${_pwd}
