@@ -3,11 +3,12 @@ set -e
 cd $(dirname "$(readlink -f "$0")")
 bin=$(pwd)
 if [ -z "$@" ]; then
-  . ${bin}/activate $@
+  . activate $@
 else
-  . ${bin}/setup-cluster-configure $@
+  . setup-cluster-configure $@
 fi
 cd ${kubespray_dir}
+export ANSIBLE_CONFIG="${base_dir}/ansible.cfg"
 ansible-playbook -i ${inventory}/inventory.cfg cluster.yml -b -v
 
 echo Staring kubectl proxy
