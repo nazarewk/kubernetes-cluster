@@ -8,4 +8,5 @@ set -a
 PATH="${base_dir}/bin:${PATH}"
 CONFIG_FILE=${inventory}/inventory.cfg
 KUBECONFIG=${kubespray_dir}/artifacts/admin.conf
+ANSIBLE_CONFIG="${base_dir}/ansible.cfg"
 set +a

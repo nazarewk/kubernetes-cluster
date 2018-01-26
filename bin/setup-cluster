@@ -8,7 +8,6 @@ else
   . setup-cluster-configure $@
 fi
 cd ${kubespray_dir}
-export ANSIBLE_CONFIG="${base_dir}/ansible.cfg"
 ansible-playbook -i ${inventory}/inventory.cfg cluster.yml -b -v
 
 echo Staring kubectl proxy
