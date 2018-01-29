@@ -1,0 +1,8 @@
+#!/bin/sh
+cd $(dirname "$(readlink -f "$0")")
+
+name=$1
+for token in $(./kubectl --namespace ${name} get serviceaccount ${name} -o jsonpath='{.secrets[*].name}'); do                                                                                                          (.env)(git)-[master]
+    ./kubectl get secrets ${token} --namespace ${name} -o jsonpath='{.data.token}' | base64 --decode
+    echo
+done
