@@ -36,6 +36,7 @@ subjects:
 EOF
   echo Tokens:
   ./student-tokens ${name}
+done
 }
 
 case $1 in
@@ -46,4 +47,3 @@ case $1 in
     kubectl_command "$@"
     ;;
 esac
-done
