@@ -18,6 +18,7 @@ python3 contrib/inventory_builder/inventory.py $@
 sed -i"$(date -Iseconds).bkp" -e '/calico-rr/,$d' ${inventory}/inventory.cfg
 
 cat > ${inventory}/group_vars/all.yml << EOF
+cluster_name: zetis-kubernetes
 bootstrap_os: coreos
 kube_basic_auth: true
 kubeconfig_localhost: true

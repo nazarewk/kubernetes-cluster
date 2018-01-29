@@ -1,14 +1,30 @@
 #!/bin/sh
 cd $(dirname "$(readlink -f "$0")")/..
 
+
 find_virtualenv() {
     which virtualenv 2> /dev/null || which virtualenv
 }
 
+install_virtualenv () {
+  local pip=$(which pip)
+  local apt=$(which apt-get)
+  if [ ! -z "${pip}" ]; then
+    sudo ${pip} install virtualenv
+    return 0
+  elif [ ! -z "${apt}" ]; then
+    sudo ${apt} install virtualenv
+    return 0
+  else
+    echo 'Virtualenv, pip and apt-get are all missing, cannot proceed'
+    exit 1
+  fi
+
+}
+
 create_env () {
     local cmd=$(find_virtualenv)
-    [ -z "$cmd" ] && sudo pip install virtualenv && cmd=$(find_virtualenv)
-    [ -z "$cmd" ] && echo "virtualenv is missing" && exit 1
+    [ -z "$cmd" ] && install_virtualenv && cmd=$(find_virtualenv)
 
     ${cmd} -p $(which python) .env
     . .env/bin/activate
