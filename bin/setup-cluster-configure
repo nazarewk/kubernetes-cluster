@@ -26,4 +26,5 @@ kubectl_localhost: false
 download_run_once: true
 cert_management: "{{ 'vault' if groups.get('vault', None) else 'script' }}"
 helm_enabled: true
+helm_deployment_type: docker
 EOF
