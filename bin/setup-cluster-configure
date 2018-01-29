@@ -1,11 +1,21 @@
 #!/bin/sh
 cd $(dirname "$(readlink -f "$0")")
 . cluster-vars
+
+ssh_config_present () {
+  python -c "import sys; sys.exit(0 if open('zetis/.ssh/kubernetes.conf', 'rb').read() in open('${HOME}/.ssh/config', 'rb').read() else 1)"
+  return $?
+}
+
+ssh_config_present || cat ${base_dir}/zetis/.ssh/kubernetes.conf >> ~/.ssh/config
+
 cd ${kubespray_dir}
 
 # based on https://github.com/kubernetes-incubator/kubespray/blob/master/docs/getting-started.md#building-your-own-inventory
 cp -r inventory -T ${inventory}
 python3 contrib/inventory_builder/inventory.py $@
+# remove everything after calico-rr group (should be calico + vault nodes)
+sed -i"$(date -Iseconds).bkp" -e '/calico-rr/,$d' ${inventory}/inventory.cfg
 
 cat > ${inventory}/group_vars/all.yml << EOF
 bootstrap_os: coreos
