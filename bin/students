@@ -1,37 +1,46 @@
 #!/bin/sh
 cd $(dirname "$(readlink -f "$0")")
-names=($1)
 
-for name in $names; do
+get_tokens () {
+  local name=$1
+  for token in $(kubectl --namespace ${name} get serviceaccount ${name} -o jsonpath='{.secrets[*].name}'); do                                                                                                          (.env)(git)-[master]
+      kubectl get secrets ${token} --namespace ${name} -o jsonpath='{.data.token}' | base64 --decode
+      echo
+  done
+}
+
+for name in $1; do
   cat  <<EOF | kubectl $2 -f -
-  apiVersion: v1
-  kind: Namespace
-  metadata:
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ${name}
+  labels:
     name: ${name}
-    labels:
-      name: ${name}
 
-  ---
+---
 
-  apiVersion: v1
-  kind: ServiceAccount
-  metadata:
-    name: ${name}
-    namespace: ${name}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ${name}
+  namespace: ${name}
 
-  ---
+---
 
-  kind: RoleBinding
-  apiVersion: rbac.authorization.k8s.io/v1
-  metadata:
-    name: ${name}-admin-binding
-    namespace: ${name}
-  roleRef:
-    kind: ClusterRole
-    name: admin
-    apiGroup: rbac.authorization.k8s.io
-  subjects:
-  - kind: ServiceAccount
-    name: ${name}
-  EOF
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: ${name}-admin-binding
+  namespace: ${name}
+roleRef:
+  kind: ClusterRole
+  name: admin
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: ServiceAccount
+  name: ${name}
+EOF
+  echo Tokens:
+  get_tokens
 done
