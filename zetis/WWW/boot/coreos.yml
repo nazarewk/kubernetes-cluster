@@ -1,6 +1,6 @@
 passwd:
   users:
-  - name: core
+  - name: admin
     groups: [sudo, docker]
     ssh_authorized_keys:
     - ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAIEAo8u08jkbHW+a68b5rTc6LNkLE8y9XKqOzNCLb4m0huPFtbc5TU5LIVLl3ycFgmSCvQj09ylHLfG+9vZ+ISNpzzIsdZJSoVgJLx5852EVYygoQ3/wlLVedPhZuHl57ZZBd5qOjzy0kdM+DGNlCzmqsy1vksQteCFGj+dAYs7Y6L8= ato@volt.iem.pw.edu.pl
