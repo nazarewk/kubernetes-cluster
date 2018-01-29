@@ -22,7 +22,7 @@ cluster_name: zetis-kubernetes
 bootstrap_os: coreos
 kube_basic_auth: true
 kubeconfig_localhost: true
-kubectl_localhost: true
+kubectl_localhost: false
 download_run_once: true
 cert_management: "{{ 'vault' if groups.get('vault', None) else 'script' }}"
 EOF
