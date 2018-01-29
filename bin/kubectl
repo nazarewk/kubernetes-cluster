@@ -2,5 +2,5 @@
 cd $(dirname "$(readlink -f "$0")")/..
 export KUBECONFIG=artifacts/admin.conf
 chmod +x artifacts/kubectl
-[ -f artifacts/kubectl ] && kubectl=artifacts/kubectl || which kubectl
+[ -f artifacts/kubectl ] && kubectl=artifacts/kubectl || kubectl=/usr/bin/kubectl
 ${kubectl} "$@"
