@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: stud
+  labels:
+    name: stud
+
+---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: stud
+  namespace: stud
+
+---
+
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: stud-admin-binding
+  namespace: stud
+roleRef:
+  kind: ClusterRole
+  name: admin
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: ServiceAccount
+  name: stud
