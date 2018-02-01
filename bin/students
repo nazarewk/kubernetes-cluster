@@ -40,7 +40,7 @@ done
 }
 
 case $1 in
-  list)
+  ""|list)
     ./kubectl get namespace
     ;;
   *)
