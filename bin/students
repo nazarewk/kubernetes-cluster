@@ -1,9 +1,14 @@
 #!/bin/sh
-cd $(dirname "$(readlink -f "$0")")
+# Author: Krzysztof Nazarewski <nazarewk@gmail.com>
+# Purpose: executes operations on users (create, get, describe, delete)
+
+. ${0%/*}/vars
 
 kubectl_command () {
-for name in $1; do
-  cat  <<EOF | ./kubectl $2 -f -
+local users="$1"
+local cmd="$2"
+for name in $users; do
+  cat  <<EOF | kubectl $cmd -f -
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -35,13 +40,13 @@ subjects:
   name: ${name}
 EOF
   echo Tokens:
-  ./student-tokens ${name}
+  student-tokens ${name}
 done
 }
 
 case $1 in
   ""|list)
-    ./kubectl get namespace
+    kubectl get namespace
     ;;
   *)
     kubectl_command "$@"

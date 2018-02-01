@@ -2,5 +2,5 @@
 set -e
 cd $(dirname "$(readlink -f "$0")")
 . activate $@
-cd ${kubespray_dir}
-ansible-playbook -i ${inventory}/inventory.cfg upgrade-cluster.yml -b -v $@
+cd $KUBESPRAY
+ansible-playbook -i $INVENTORY/inventory.cfg upgrade-cluster.yml -b -v $@

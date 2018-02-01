@@ -1,5 +1,7 @@
 #!/bin/sh
-cd $(dirname "$(readlink -f "$0")")/..
+# Author: Krzysztof Nazarewski <nazarewk@gmail.com>
+# Purpose: git pull wrapper including submodule updates
+
 git pull || (git fetch --all && git reset --hard origin)
 git submodule update --init --remote --recursive
-chmod +x bin/*
+chmod +x ${0%/*}/*

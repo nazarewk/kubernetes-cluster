@@ -1,0 +1,58 @@
+#!/bin/sh
+# Author: Krzysztof Nazarewski <nazarewk@gmail.com>
+# Purpose: configures cluster (passwordless SSH, inventory and group_vars)
+
+. ${0%/*}/vars
+SSH_CFG_DST="$HOME/.ssh/config"
+SSH_CFG="$PDIR/zetis/.ssh/kubernetes.conf"
+
+
+is_ssh_config_missing () {
+  cat << EOF | python
+import sys
+expected = open('$SSH_CFG', 'rb').read()
+existing = open('$SSH_CFG_DST', 'rb').read()
+sys.exit(expected in existing)
+EOF
+  return $?
+}
+
+is_ssh_config_missing && cat $SSH_CFG >> $SSH_CFG_DST
+
+cat << EOF > $INVENTORY/inventory.cfg
+[all]
+;s3  ansible_host=s3 ip=10.146.225.3
+s4  ansible_host=s4 ip=10.146.225.4
+s5  ansible_host=s5 ip=10.146.225.5
+s6  ansible_host=s6 ip=10.146.225.6
+;s7  ansible_host=s7 ip=10.146.225.7
+;s8  ansible_host=s8 ip=10.146.225.8
+;s9  ansible_host=s9 ip=10.146.225.9
+
+[kube-master]
+s4
+
+[kube-node]
+s5
+s6
+
+[etcd]
+s4
+
+[k8s-cluster:children]
+kube-node
+kube-master
+EOF
+
+cat << EOF > $INVENTORY/group_vars/all.yml
+cluster_name: zetis-kubernetes
+bootstrap_os: coreos
+kube_basic_auth: true
+kubeconfig_localhost: true
+kubectl_localhost: true
+download_run_once: true
+cert_management: "{{ 'vault' if groups.get('vault', None) else 'script' }}"
+helm_enabled: true
+helm_deployment_type: docker
+kube_script_dir: /opt/bin/kubernetes-scripts
+EOF

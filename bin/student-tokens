@@ -1,8 +1,14 @@
 #!/bin/sh
-cd $(dirname "$(readlink -f "$0")")
+# Author: Krzysztof Nazarewski <nazarewk@gmail.com>
+# Purpose: lists kubernetes authentication tokens for specified user
 
+. ${0%/*}/vars
 name=$1
-for token in `./kubectl --namespace ${name} get serviceaccount ${name} -o jsonpath='{.secrets[*].name}'`; do
-    ./kubectl get secrets ${token} --namespace ${name} -o jsonpath='{.data.token}' | base64 --decode
+args="--namespace ${name} get serviceaccount ${name}"
+args="$args -o jsonpath={.secrets[*].name}"
+for token in `kubectl $args`; do
+    args="get secrets ${token} --namespace ${name}"
+    args="$args  -o jsonpath={.data.token}"
+    kubectl $args | base64 --decode
     echo
 done

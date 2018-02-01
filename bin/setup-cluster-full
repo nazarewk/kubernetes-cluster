@@ -1,8 +1,6 @@
 #!/bin/sh
-base_dir=$(readlink -f $(dirname "$(readlink -f "$0")")/..)
-set -e
+. $(realpath ${0%/*})/vars
 
-${base_dir}/bin/pull
-${base_dir}/bin/setup-packages
-. ${base_dir}/bin/activate
-${base_dir}/bin/setup-cluster "$@"
+pull
+. activate
+setup-cluster "$@"

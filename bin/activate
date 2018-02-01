@@ -1,6 +1,6 @@
 #!/bin/sh
-_pwd=$(pwd)
-cd $(dirname "$(readlink -f "$0")")
-. ./cluster-vars $@
-. ../.env/bin/activate
-cd ${_pwd}
+# Author: Krzysztof Nazarewski <nazarewk@gmail.com>
+# Purpose: activates Python virtualenv and sets common shell variables
+
+. ${0%/*}/vars
+[ -f "$PDIR/.env" ] && . $PDIR/.env/bin/activate || . ensure-virtualenv

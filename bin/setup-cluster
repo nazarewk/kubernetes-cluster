@@ -1,21 +1,18 @@
 #!/bin/sh
-set -e
-cd $(dirname "$(readlink -f "$0")")
-bin=$(pwd)
-if [ -z "$@" ]; then
-  . activate $@
-else
-  . setup-cluster-configure $@
-fi
+# Author: Krzysztof Nazarewski <nazarewk@gmail.com>
+# Purpose: sets up the cluster
+
+. ${0%/*}/vars
+
+[ -z "$@" ] && . activate $@ || . ensure-configuration $@
 
 (
-  cd ${kubespray_dir};
-  ansible-playbook -i ${inventory}/inventory.cfg cluster.yml -b -v
+  cd $KUBESPRAY;
+  ansible-playbook -i $INVENTORY/inventory.cfg cluster.yml -b -v
 )
 
-echo Staring kubectl proxy
-echo http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login
-echo user: kube
-echo password: $(cat ${base_dir}/credentials/kube_user)
-${bin}/kubectl proxy
-
+cat << EOF
+Login credentials:
+  user: kube
+  password: $(cat $PDIR/credentials/kube_user)
+EOF

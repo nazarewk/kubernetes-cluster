@@ -1,0 +1,44 @@
+#!/bin/sh
+# Author: Krzysztof Nazarewski <nazarewk@gmail.com>
+# Purpose: installs python virtualenv
+
+. ${0%/*}/vars
+python="$(which python)"
+env_dir="$PDIR/.env"
+activate="$env_dir/bin/activate"
+
+find_virtualenv() {
+    which virtualenv 2> /dev/null || which virtualenv
+}
+
+install_virtualenv () {
+  # Installs pip and/or virtualenv
+
+  local pip=$(which pip)
+  local apt=$(which apt-get)
+  if [ ! -z "$pip" ]; then
+    sudo $pip install virtualenv
+    return 0
+  elif [ ! -z "$apt" ]; then
+    sudo $apt install virtualenv
+    return 0
+  else
+    echo 'Virtualenv, pip and apt-get are both missing, cannot proceed'
+    exit 1
+  fi
+
+}
+
+create_env () {
+    local cmd=$(find_virtualenv)
+    [ -z "$cmd" ] && install_virtualenv && cmd=$(find_virtualenv)
+
+    ${cmd} -p $python $env_dir
+    . $activate
+
+    pip install -U pip setuptools
+}
+
+[ -z "$python" ] && echo 'python is missing' && exit 1
+[ -e "$activate" ] && . $activate || create_env
+pip install -U -r requirements.txt

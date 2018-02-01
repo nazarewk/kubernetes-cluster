@@ -1,0 +1,14 @@
+#!/bin/sh
+# Author: Krzysztof Nazarewski <nazarewk@gmail.com>
+# Purpose: Holds common variables used in all other scripts
+
+BIN="$(realpath ${0%/*})"
+PATH="$BIN:$PATH"
+PDIR="${BIN%/*}"
+VENV="$PDIR/.env"
+KUBESPRAY="$PDIR/kubespray"
+INVENTORY="$KUBESPRAY/my_inventory"
+CONFIG_FILE="$INVENTORY/inventory.cfg"
+
+export KUBECONFIG="$KUBESPRAY/artifacts/admin.conf"
+export ANSIBLE_CONFIG="$PDIR/ansible.cfg"
