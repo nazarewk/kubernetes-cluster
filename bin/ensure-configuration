@@ -1,6 +1,6 @@
 #!/bin/sh
 # Author: Krzysztof Nazarewski <nazarewk@gmail.com>
-# Purpose: configures cluster (passwordless SSH, inventory and group_vars)
+# Purpose: configures cluster (SSH, inventory, group_vars)
 
 . ${0%/*}/vars
 SSH_CFG_DST="$HOME/.ssh/config"
@@ -19,15 +19,19 @@ EOF
 
 is_ssh_config_missing && cat $SSH_CFG >> $SSH_CFG_DST
 
-cat << EOF > $INVENTORY/inventory.cfg
+file="$INVENTORY/inventory.cfg"
+[ -f "$file" ] || cat << EOF > "$file"
 [all]
-;s3  ansible_host=s3 ip=10.146.225.3
-s4  ansible_host=s4 ip=10.146.225.4
-s5  ansible_host=s5 ip=10.146.225.5
-s6  ansible_host=s6 ip=10.146.225.6
-;s7  ansible_host=s7 ip=10.146.225.7
-;s8  ansible_host=s8 ip=10.146.225.8
-;s9  ansible_host=s9 ip=10.146.225.9
+;s3  ip=10.146.225.3
+s4  ip=10.146.225.4
+s5  ip=10.146.225.5
+s6  ip=10.146.225.6
+;s7  ip=10.146.225.7
+;s8  ip=10.146.225.8
+;s9  ip=10.146.225.9
+;sa  ip=10.146.225.10
+;sb  ip=10.146.225.11
+;sc  ip=10.146.225.12
 
 [kube-master]
 s4
@@ -44,7 +48,8 @@ kube-node
 kube-master
 EOF
 
-cat << EOF > $INVENTORY/group_vars/all.yml
+file="$INVENTORY/group_vars/all.yml"
+[ -f "$file" ] || cat << EOF > "$file"
 cluster_name: zetis-kubernetes
 bootstrap_os: coreos
 kube_basic_auth: true

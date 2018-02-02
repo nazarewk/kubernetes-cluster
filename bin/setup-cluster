@@ -3,12 +3,12 @@
 # Purpose: sets up the cluster
 
 . ${0%/*}/vars
-
-[ -z "$@" ] && . activate $@ || . ensure-configuration $@
+. $BIN/ensure-configuration
+. $BIN/activate
 
 (
   cd $KUBESPRAY;
-  ansible-playbook -i $INVENTORY/inventory.cfg cluster.yml -b -v
+  ansible-playbook -i $INVENTORY/inventory.cfg cluster.yml -b -v $@
 )
 
 cat << EOF

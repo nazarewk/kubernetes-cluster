@@ -1,6 +1,0 @@
-#!/bin/sh
-set -e
-cd $(dirname "$(readlink -f "$0")")
-. activate $@
-cd $KUBESPRAY
-ansible-playbook -i $INVENTORY/inventory.cfg upgrade-cluster.yml -b -v $@

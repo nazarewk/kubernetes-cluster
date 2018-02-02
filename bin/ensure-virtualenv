@@ -4,8 +4,7 @@
 
 . ${0%/*}/vars
 python="$(which python)"
-env_dir="$PDIR/.env"
-activate="$env_dir/bin/activate"
+activate="$VENV/bin/activate"
 
 find_virtualenv() {
     which virtualenv 2> /dev/null || which virtualenv
@@ -15,7 +14,7 @@ install_virtualenv () {
   # Installs pip and/or virtualenv
 
   local pip=$(which pip)
-  local apt=$(which apt-get)
+  local apt=$(which apt)
   if [ ! -z "$pip" ]; then
     sudo $pip install virtualenv
     return 0
@@ -33,7 +32,7 @@ create_env () {
     local cmd=$(find_virtualenv)
     [ -z "$cmd" ] && install_virtualenv && cmd=$(find_virtualenv)
 
-    ${cmd} -p $python $env_dir
+    $cmd -p $python $VENV
     . $activate
 
     pip install -U pip setuptools

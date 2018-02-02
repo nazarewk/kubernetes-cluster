@@ -1,0 +1,10 @@
+#!/bin/sh
+# Author: Krzysztof Nazarewski <nazarewk@gmail.com>
+# Purpose: runs upgrade-cluster.yml instead of cluster.yml
+
+. ${0%/*}/vars
+. $BIN/ensure-configuration
+. $BIN/activate
+
+cd $KUBESPRAY
+ansible-playbook -i $INVENTORY/inventory.cfg upgrade-cluster.yml -b -v $@

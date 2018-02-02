@@ -8,7 +8,7 @@ kubectl_command () {
 local users="$1"
 local cmd="$2"
 for name in $users; do
-  cat  <<EOF | kubectl $cmd -f -
+  cat  <<EOF | $BIN/kubectl $cmd -f -
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -40,13 +40,20 @@ subjects:
   name: ${name}
 EOF
   echo Tokens:
-  student-tokens ${name}
+  $BIN/student-tokens ${name}
 done
 }
 
 case $1 in
   ""|list)
-    kubectl get namespace
+    $BIN/kubectl get namespace
+    ;;
+  -h)
+    cat << EOF
+    Usage: $0 "<usernames>" create|get|describe|delete
+      where <usernames> is a single-argument list of usernames
+    You can also call it without arguments to list users (namespaces)
+EOF
     ;;
   *)
     kubectl_command "$@"

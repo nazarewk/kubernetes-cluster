@@ -4,11 +4,11 @@
 
 . ${0%/*}/vars
 name=$1
-args="--namespace ${name} get serviceaccount ${name}"
+args="--namespace $name get serviceaccount $name"
 args="$args -o jsonpath={.secrets[*].name}"
-for token in `kubectl $args`; do
-    args="get secrets ${token} --namespace ${name}"
+for token in `$BIN/kubectl $args`; do
+    args="get secrets $token --namespace $name"
     args="$args  -o jsonpath={.data.token}"
-    kubectl $args | base64 --decode
+    $BIN/kubectl $args | base64 --decode
     echo
 done

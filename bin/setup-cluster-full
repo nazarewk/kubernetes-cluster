@@ -1,6 +1,5 @@
 #!/bin/sh
-. $(realpath ${0%/*})/vars
+. ${0%/*}/vars
 
-pull
-. activate
-setup-cluster "$@"
+$BIN/pull
+$BIN/setup-cluster $@

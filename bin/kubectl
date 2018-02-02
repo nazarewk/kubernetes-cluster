@@ -4,9 +4,11 @@
 
 . ${0%/*}/vars
 
-[ -f artifacts/kubectl ] \
- && chmod +x "$PDIR/artifacts/kubectl" \
- && kubectl="$PDIR/artifacts/kubectl" \
- || kubectl=/usr/bin/kubectl
+if [ -f artifacts/kubectl ]; then
+  chmod +x "$PDIR/artifacts/kubectl"
+  kubectl="$PDIR/artifacts/kubectl"
+else
+  kubectl=/usr/bin/kubectl
+fi
 
 $kubectl $@
