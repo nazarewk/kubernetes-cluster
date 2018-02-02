@@ -3,8 +3,10 @@
 # Purpose: kubectl wrapper which uses generated  configurations
 
 [ "${0%/*}" == "kubectl" ] \
- && . $(dirname $(which kubectl)) \
- || . ${0%/*}/vars
+ && _bin=$(dirname $(which kubectl)) \
+ || _bin=${0%/*}
+
+. $_bin/vars
 
 if [ -f artifacts/kubectl ]; then
   chmod +x "$PDIR/artifacts/kubectl"
