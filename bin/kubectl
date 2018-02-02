@@ -2,15 +2,18 @@
 # Author: Krzysztof Nazarewski <nazarewk@gmail.com>
 # Purpose: kubectl wrapper which uses generated  configurations
 
-[ "${0%/*}" == "kubectl" ] \
+# Handle running kubectl from PATH
+[ "${0%/*}" == "$0" ] \
  && _bin=$(dirname $(which kubectl)) \
  || _bin=${0%/*}
 
 . $_bin/vars
 
-if [ -f artifacts/kubectl ]; then
-  chmod +x "$PDIR/artifacts/kubectl"
-  kubectl="$PDIR/artifacts/kubectl"
+local_bin="$PDIR/artifacts/kubectl"
+
+if [ -f $local_bin ]; then
+  chmod +x $local_bin
+  kubectl=$local_bin
 else
   kubectl=/usr/bin/kubectl
 fi
