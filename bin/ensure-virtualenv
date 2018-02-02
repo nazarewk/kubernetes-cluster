@@ -40,4 +40,4 @@ create_env () {
 
 [ -z "$python" ] && echo 'python is missing' && exit 1
 [ -e "$activate" ] && . $activate || create_env
-pip install -U -r requirements.txt
+pip install -U -r $PDIR/requirements.txt
