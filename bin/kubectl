@@ -2,7 +2,9 @@
 # Author: Krzysztof Nazarewski <nazarewk@gmail.com>
 # Purpose: kubectl wrapper which uses generated  configurations
 
-. ${0%/*}/vars
+[ "${0%/*}" == "kubectl" ] \
+ && . $(dirname $(which kubectl)) \
+ || . ${0%/*}/vars
 
 if [ -f artifacts/kubectl ]; then
   chmod +x "$PDIR/artifacts/kubectl"
