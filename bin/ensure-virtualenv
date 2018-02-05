@@ -25,7 +25,6 @@ install_virtualenv () {
     echo 'Virtualenv, pip and apt-get are both missing, cannot proceed'
     exit 1
   fi
-
 }
 
 create_env () {
