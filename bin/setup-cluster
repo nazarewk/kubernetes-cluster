@@ -11,7 +11,7 @@
   ansible-playbook -i $INVENTORY/inventory.cfg cluster.yml -b -v $@
 )
 
-chmod -R 700 $KUBESPRAY/{artifacts/admin.conf,credentials}
+chmod -R 700 $KUBESPRAY/artifacts/admin.conf $KUBESPRAY/credentials
 
 cat << EOF
 Login credentials:
